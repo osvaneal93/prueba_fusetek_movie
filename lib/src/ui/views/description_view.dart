@@ -24,21 +24,25 @@ class DescriptionView extends StatelessWidget {
                   children: [
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       SizedBox(
-                        height: sizeDevice.height * .15,
-                        width: sizeDevice.width * .2,
+                        height: sizeDevice.height * .2,
+                        width: sizeDevice.width * .25,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: FadeInImage(
-                            placeholder:
-                                const AssetImage('assets/movieapp.png'),
-                            image: NetworkImage(
-                              model.getPoster(),
+                          child: Hero(
+                            tag: model.uniqueId!,
+
+                            child: FadeInImage(
+                              placeholder:
+                                  const AssetImage('assets/movieapp.png'),
+                              image: NetworkImage(
+                                model.getPoster(),
+                              ),
+                              fit: BoxFit.cover,
+                              imageErrorBuilder: (context, error, stackTrace) {
+                                return Image.asset('assets/broken.png',
+                                    fit: BoxFit.contain);
+                              },
                             ),
-                            fit: BoxFit.cover,
-                            imageErrorBuilder: (context, error, stackTrace) {
-                              return Image.asset('assets/broken.png',
-                                  fit: BoxFit.contain);
-                            },
                           ),
                         ),
                       ),

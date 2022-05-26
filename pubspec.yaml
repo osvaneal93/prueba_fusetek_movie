@@ -35,7 +35,7 @@ dependencies:
   flutter_bloc:
   http:
   equatable:
-  
+  lazy_load_scrollview:
   flutter_swiper_null_safety: 
 
 dev_dependencies:

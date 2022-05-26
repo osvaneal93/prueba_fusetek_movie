@@ -14,16 +14,9 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
 
   //creamos un streamController por si se tiene que utilizar la actualizacion en 
   //infiniteScroll
-  final _popularStreamController = StreamController<List<MovieModel>>.broadcast();
-   get popularSink => _popularStreamController.sink.add;
-   get popularStream => _popularStreamController.stream;
   MovieBloc() : super(MovieInitial()) {
     
     final ApiRepository _apiRepository = ApiRepository();
-
-    
-  
-
     on<GetMovieList>((event, emit) async {
       try {
         emit(MovieLoading());

@@ -1,4 +1,5 @@
 part of "widgets.dart";
+
 //Generamos nuestro widget en donde mostraremos las portadas de las pelicula
 //utilizamos la libreria de swipper para hacer mas dinamico el intercambio en animaciones.
 class MoviePageview extends StatelessWidget {
@@ -14,10 +15,11 @@ class MoviePageview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: sizeDevice.height * .5,
+      height: sizeDevice.height * .3,
       width: double.infinity,
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {
+          peliculas[index].uniqueId = '${peliculas[index].id} - bigCard';
           return Column(
             children: [
               Padding(
@@ -25,23 +27,26 @@ class MoviePageview extends StatelessWidget {
                   child: Text(peliculas[index].title!,
                       style: const TextStyle(color: Colors.amber, fontSize: 20),
                       overflow: TextOverflow.ellipsis)),
-              SizedBox(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, 'description/',
-                        arguments: peliculas[index]);
-                  },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: FadeInImage(
-                      placeholder: NetworkImage(peliculas[index].getPoster()),
-                      image: NetworkImage(
-                        peliculas[index].getPoster(),
+              Hero(
+                tag: peliculas[index].uniqueId!,
+                child: SizedBox(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, 'description/',
+                          arguments: peliculas[index]);
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: FadeInImage(
+                        placeholder: NetworkImage(peliculas[index].getPoster()),
+                        image: NetworkImage(
+                          peliculas[index].getPoster(),
+                        ),
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return Image.asset('assets/broken.png',
+                              fit: BoxFit.fitWidth);
+                        },
                       ),
-                      imageErrorBuilder: (context, error, stackTrace) {
-                        return Image.asset('assets/broken.png',
-                            fit: BoxFit.fitWidth);
-                      },
                     ),
                   ),
                 ),
@@ -50,7 +55,7 @@ class MoviePageview extends StatelessWidget {
           );
         },
         itemCount: peliculas.length,
-        itemWidth: sizeDevice.width * .6,
+        itemWidth: sizeDevice.width * .35,
         layout: SwiperLayout.STACK,
         pagination: const SwiperPagination(),
       ),
